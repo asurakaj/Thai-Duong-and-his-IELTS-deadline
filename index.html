@@ -66,4 +66,157 @@
 
   .block {
     display: flex;
-    flex-direction: column
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 14vw, 9rem);
+    line-height: 1;
+    color: var(--ink);
+    min-width: 2ch;
+    letter-spacing: -0.02em;
+    transition: color 0.2s;
+  }
+
+  .num.tick {
+    color: var(--accent);
+  }
+
+  .unit {
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  .sep {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 12vw, 8rem);
+    line-height: 1;
+    color: var(--dim);
+    padding-bottom: 1.6rem;
+    user-select: none;
+  }
+
+  .deadline {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--dim);
+    text-transform: uppercase;
+  }
+
+  .deadline span {
+    color: var(--ink);
+  }
+
+  .bar-wrap {
+    width: min(340px, 80vw);
+    margin: 1.8rem auto 0;
+    height: 2px;
+    background: var(--dim);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width 1s linear;
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="label">Countdown to deadline</div>
+
+  <div class="grid">
+    <div class="block">
+      <div class="num" id="days">--</div>
+      <div class="unit">days</div>
+    </div>
+    <div class="sep">:</div>
+    <div class="block">
+      <div class="num" id="hours">--</div>
+      <div class="unit">hours</div>
+    </div>
+    <div class="sep">:</div>
+    <div class="block">
+      <div class="num" id="mins">--</div>
+      <div class="unit">mins</div>
+    </div>
+    <div class="sep">:</div>
+    <div class="block">
+      <div class="num" id="secs">--</div>
+      <div class="unit">secs</div>
+    </div>
+  </div>
+
+  <div class="deadline">Target &nbsp;<span>15 July 2026</span></div>
+
+  <div class="bar-wrap">
+    <div class="bar-fill" id="bar"></div>
+  </div>
+</div>
+
+<script>
+  // Updated Target: July 15th, 2026
+  const TARGET = new Date('2026-07-15T23:59:59');
+  const START  = new Date('2026-03-11T00:00:00'); 
+
+  const pad = n => String(n).padStart(2, '0');
+
+  function flash(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.classList.add('tick');
+    setTimeout(() => el.classList.remove('tick'), 300);
+  }
+
+  function tick() {
+    const now  = new Date();
+    const diff = TARGET - now;
+
+    if (diff <= 0) {
+      document.querySelector('.wrap').innerHTML =
+        '<div class="label" style="color:var(--accent);font-size:1rem">Deadline reached</div>';
+      return;
+    }
+
+    const totalSecs = Math.floor(diff / 1000);
+    const days  = Math.floor(totalSecs / 86400);
+    const hours = Math.floor((totalSecs % 86400) / 3600);
+    const mins  = Math.floor((totalSecs % 3600) / 60);
+    const secs  = totalSecs % 60;
+
+    const setVal = (id, val) => {
+      const el = document.getElementById(id);
+      const padded = id === 'days' ? String(days) : pad(val);
+      if (el.textContent !== padded) { 
+        el.textContent = padded; 
+        flash(id); 
+      }
+    };
+
+    setVal('days',  days);
+    setVal('hours', hours);
+    setVal('mins',  mins);
+    setVal('secs',  secs);
+
+    // progress bar logic
+    const total   = TARGET - START;
+    const elapsed = now - START;
+    const pct     = Math.min(100, Math.max(0, (elapsed / total) * 100));
+    document.getElementById('bar').style.width = pct + '%';
+  }
+
+  tick();
+  setInterval(tick, 1000);
+</script>
+
+</body>
+</html>
