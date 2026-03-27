@@ -1,133 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Countdown - July Deadline</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IELTS Deadline Countdown</title>
 
-  :root {
-    --bg: #0a0a08;
-    --ink: #f0ead6;
-    --accent: #c8f04a;
-    --dim: #3a3a32;
-  }
+  <meta property="og:title" content="IELTS Deadline Countdown">
+  <meta property="og:description" content="Tracking progress toward the mid-July target.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://asurakaj.github.io/Thai-Duong-and-his-IELTS-deadline/">
 
-  body {
-    background: var(--bg);
-    color: var(--ink);
-    font-family: 'DM Mono', monospace;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+  
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  /* grain overlay */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    opacity: 0.35;
-    z-index: 10;
-  }
+    :root {
+      --bg: #0a0a08;
+      --ink: #f0ead6;
+      --accent: #c8f04a;
+      --dim: #3a3a32;
+    }
 
-  .wrap {
-    text-align: center;
-    padding: 2rem;
-    animation: fadein 1.2s ease both;
-  }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'DM Mono', monospace;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
 
-  @keyframes fadein {
-    from { opacity: 0; transform: translateY(18px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+    /* grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      opacity: 0.35;
+      z-index: 10;
+    }
 
-  .label {
-    font-size: 0.7rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 2rem;
-  }
+    .wrap {
+      text-align: center;
+      padding: 2rem;
+      animation: fadein 1.2s ease both;
+      width: 100%;
+    }
 
-  .grid {
-    display: flex;
-    gap: 0.5rem;
-    align-items: flex-start;
-    justify-content: center;
-    margin-bottom: 2rem;
-  }
+    @keyframes fadein {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
 
-  .block {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.4rem;
-  }
+    .label {
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 2rem;
+    }
 
-  .num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(4rem, 14vw, 9rem);
-    line-height: 1;
-    color: var(--ink);
-    min-width: 2ch;
-    letter-spacing: -0.02em;
-    transition: color 0.2s;
-  }
+    .grid {
+      display: flex;
+      gap: 0.5rem;
+      align-items: flex-start;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
 
-  .num.tick {
-    color: var(--accent);
-  }
+    .block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+    }
 
-  .unit {
-    font-size: 0.6rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--dim);
-  }
+    .num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 12vw, 8rem);
+      line-height: 1;
+      color: var(--ink);
+      min-width: 2ch;
+      letter-spacing: -0.02em;
+      transition: color 0.2s;
+    }
 
-  .sep {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(3.5rem, 12vw, 8rem);
-    line-height: 1;
-    color: var(--dim);
-    padding-bottom: 1.6rem;
-    user-select: none;
-  }
+    .num.tick { color: var(--accent); }
 
-  .deadline {
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    color: var(--dim);
-    text-transform: uppercase;
-  }
+    .unit {
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--dim);
+    }
 
-  .deadline span {
-    color: var(--ink);
-  }
+    .sep {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 10vw, 7rem);
+      line-height: 1;
+      color: var(--dim);
+      padding-bottom: 1.6rem;
+      user-select: none;
+    }
 
-  .bar-wrap {
-    width: min(340px, 80vw);
-    margin: 1.8rem auto 0;
-    height: 2px;
-    background: var(--dim);
-    border-radius: 2px;
-    overflow: hidden;
-  }
+    .deadline {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--dim);
+      text-transform: uppercase;
+    }
 
-  .bar-fill {
-    height: 100%;
-    background: var(--accent);
-    border-radius: 2px;
-    transition: width 1s linear;
-  }
-</style>
+    .deadline span { color: var(--ink); }
+
+    .bar-wrap {
+      width: min(340px, 70vw);
+      margin: 1.8rem auto 0;
+      height: 2px;
+      background: var(--dim);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: width 1s linear;
+    }
+  </style>
 </head>
 <body>
 
@@ -164,7 +168,6 @@
 </div>
 
 <script>
-  // Updated Target: July 15th, 2026
   const TARGET = new Date('2026-07-15T23:59:59');
   const START  = new Date('2026-03-11T00:00:00'); 
 
@@ -207,7 +210,6 @@
     setVal('mins',  mins);
     setVal('secs',  secs);
 
-    // progress bar logic
     const total   = TARGET - START;
     const elapsed = now - START;
     const pct     = Math.min(100, Math.max(0, (elapsed / total) * 100));
